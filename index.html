@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLASSIFIED PROTOCOL: AGENT BM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Kanit:wght@300;400;500;600&family=Mali:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Chakra Petch', 'Kanit', sans-serif;
+    }
+    body {
+      background: #060913;
+      background-image: 
+        radial-gradient(circle at 50% 20%, rgba(14, 165, 233, 0.15) 0%, transparent 60%),
+        linear-gradient(to bottom, #030712, #080d1a);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      color: #e2e8f0;
+      overflow-x: hidden;
+      transition: background 0.8s ease;
+    }
+
+    body.romantic-mode {
+      background: linear-gradient(135deg, #ffeef5 0%, #ffd8e6 50%, #fed7ea 100%);
+    }
+
+    .terminal-card {
+      background: rgba(13, 19, 33, 0.94);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 24px;
+      max-width: 480px;
+      width: 100%;
+      padding: 30px 24px;
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(14, 165, 233, 0.15);
+      backdrop-filter: blur(12px);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.6s ease;
+    }
+
+    .terminal-card.pink-card {
+      background: rgba(255, 255, 255, 0.95);
+      border: 2px solid #fbcfe8;
+      box-shadow: 0 20px 45px rgba(244, 114, 182, 0.25);
+      color: #374151;
+    }
+
+    .terminal-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, #38bdf8, transparent);
+      animation: scan 4s linear infinite;
+      z-index: 5;
+    }
+    .terminal-card.pink-card::before {
+      display: none;
+    }
+    @keyframes scan {
+      0% { top: 0%; opacity: 0.8; }
+      100% { top: 100%; opacity: 0; }
+    }
+
+    .step-page {
+      display: none;
+      width: 100%;
+    }
+    .step-page.active {
+      display: block;
+      animation: slideInRight 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(45px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid #0284c7;
+      color: #38bdf8;
+      padding: 4px 14px;
+      border-radius: 4px;
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: #38bdf8;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #38bdf8;
+      animation: blink 1.5s infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #f8fafc;
+      text-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+      margin-bottom: 12px;
+    }
+    p.desc {
+      color: #94a3b8;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .tech-input {
+      width: 100%;
+      background: rgba(2, 6, 23, 0.8);
+      border: 1px solid #334155;
+      color: #38bdf8;
+      font-size: 17px;
+      padding: 14px;
+      border-radius: 8px;
+      text-align: center;
+      letter-spacing: 3px;
+      outline: none;
+      transition: all 0.3s;
+      margin-bottom: 14px;
+    }
+    .tech-input:focus {
+      border-color: #38bdf8;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .btn-cyber {
+      width: 100%;
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: #f8fafc;
+      border: 1px solid #38bdf8;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      cursor: pointer;
+      text-transform: uppercase;
+      box-shadow: 0 0 20px rgba(2, 132, 199, 0.4);
+      transition: all 0.2s;
+    }
+    .btn-cyber:hover {
+      background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+      box-shadow: 0 0 30px rgba(14, 165, 233, 0.7);
+      transform: translateY(-1px);
+    }
+
+    .vault-outer {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 20px auto;
+      border-radius: 50%;
+      background: radial-gradient(circle, #1e293b 40%, #0f172a 80%, #020617 100%);
+      border: 8px dashed #475569;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 30px rgba(0,0,0,0.8), inset 0 0 20px #000;
+    }
+    .vault-inner {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #334155, #1e293b);
+      border: 4px solid #64748b;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .vault-wheel {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 3px solid #38bdf8;
+      box-shadow: 0 0 10px #38bdf8;
+    }
+
+    .monitor-screen {
+      background: #020617;
+      border: 2px solid #0284c7;
+      border-radius: 12px;
+      padding: 10px;
+      margin-bottom: 18px;
+      box-shadow: inset 0 0 25px rgba(2, 132, 199, 0.3);
+    }
+    .monitor-header {
+      font-size: 11px;
+      color: #38bdf8;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      border-bottom: 1px dashed rgba(56, 189, 248, 0.3);
+      padding-bottom: 4px;
+    }
+    .target-image {
+      width: 100%;
+      max-height: 240px;
+      object-fit: cover;
+      border-radius: 6px;
+      display: block;
+    }
+
+    .card-mib-display {
+      width: 100%;
+      max-width: 260px;
+      margin: 0 auto 20px auto;
+      border-radius: 12px;
+      border: 2px solid #38bdf8;
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.35);
+      display: block;
+    }
+
+    .flower-decor {
+      font-size: 26px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+    .pink-title {
+      color: #db2777 !important;
+      font-family: 'Kanit', sans-serif !important;
+      font-weight: 600;
+      text-shadow: none !important;
+    }
+    .pink-desc {
+      color: #6b7280 !important;
+    }
+
+    .envelope-container {
+      width: 100%;
+      max-width: 300px;
+      height: 190px;
+      background: #f472b6;
+      border-radius: 14px;
+      margin: 20px auto;
+      position: relative;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(244, 114, 182, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+    }
+    .envelope-container:hover {
+      transform: scale(1.03);
+    }
+    .envelope-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 150px solid transparent;
+      border-right: 150px solid transparent;
+      border-top: 95px solid #ec4899;
+      transform-origin: top;
+      z-index: 3;
+    }
+    .envelope-heart {
+      position: absolute;
+      font-size: 32px;
+      z-index: 4;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+
+    .letter-paper {
+      display: none;
+      background: #fffdfa;
+      border: 1px solid #fbcfe8;
+      border-radius: 16px;
+      padding: 24px 20px;
+      text-align: left;
+      font-family: 'Kanit', sans-serif;
+      color: #4b5563;
+      line-height: 1.8;
+      font-size: 15px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+      margin-top: 18px;
+      animation: unfold 0.5s ease forwards;
+    }
+    @keyframes unfold {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .error-log {
+      color: #f87171;
+      font-size: 13px;
+      min-height: 20px;
+      margin-top: 10px;
+      letter-spacing: 0.5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="terminal-card" id="main-card">
+    
+    <!-- หน้า 1: Secret Agency Entrance -->
+    <div id="step-1" class="step-page active">
+      <div class="status-badge"><span class="status-dot"></span> TOP SECRET // RESTRICTED ACCESS</div>
+      <h1>AGENCY GATEWAY</h1>
+      <p class="desc">เครือข่ายความมั่นคงระดับสูง ระบบตรวจพบการเข้าถึง ขอสงวนสิทธิ์การใช้งานเฉพาะ <strong>"AGENT บม."</strong> เท่านั้น</p>
+      <button class="btn-cyber" onclick="goToStep(2)">AUTHENTICATE CLEARANCE</button>
+    </div>
+
+    <!-- หน้า 2: ตู้เซฟฝากลม -->
+    <div id="step-2" class="step-page">
+      <div class="status-badge"><span class="status-dot"></span> SECURE VAULT PROTOCOL</div>
+      <h1>SUB-LEVEL 01: VAULT ACCESS</h1>
+      
+      <div class="vault-outer">
+        <div class="vault-inner">
+          <div class="vault-wheel"></div>
+          <span style="font-size: 10px; color: #94a3b8; margin-top: 8px;">LOCK: ARMORED</span>
+        </div>
+      </div>
+
+      <p class="desc">กรุณาป้อน <strong>รหัสบัตรประชาชน 13 หลัก</strong> ของ บม. เพื่อปลดสลักบานประตูนิรภัย</p>
+      <input type="password" id="id-card-input" class="tech-input" placeholder="•••••••••••••" maxlength="13">
+      <button class="btn-cyber" onclick="verifyStep1()">DISENGAGE LOCK</button>
+      <div id="error-step1" class="error-log"></div>
+    </div>
+
+    <!-- หน้า 3: จอมอนิเตอร์รูปนกเต้าหู้ -->
+    <div id="step-3" class="step-page">
+      <div class="status-badge"><span class="status-dot"></span> SURVEILLANCE FEED ACTIVE</div>
+      <h1>BIOMETRIC & COGNITIVE CHECK</h1>
+
+      <div class="monitor-screen">
+        <div class="monitor-header">
+          <span>SUBJECT: COCKATIEL (WHITE)</span>
+          <span>STATUS: TRACKED</span>
+        </div>
+        <img src="https://i.ibb.co/3m7RL10G/att-H2jj5-A1-Dnkm-Gouyi-Gnxq-MUO6-U9-FWRVHwju-Wr2-ZQHe-R0.jpg" alt="Target Analysis" class="target-image">
+      </div>
+
+      <p class="desc">นกค็อกคาเทลตัวสีขาวของ บม. มีรหัสนามประจำตัวว่าอะไร?</p>
+      <input type="text" id="bird-input" class="tech-input" placeholder="ENTER SUBJECT CODENAME">
+      <button class="btn-cyber" onclick="verifyStep2()">CONFIRM IDENTITY</button>
+      <div id="error-step2" class="error-log"></div>
+    </div>
+
+    <!-- หน้า 4: บัตรสายลับ Agent ใบหม่อน (MIB) -->
+    <div id="step-4" class="step-page">
+      <div class="status-badge" style="border-color: #22c55e; color: #4ade80;">
+        <span class="status-dot" style="background: #22c55e; box-shadow: 0 0 8px #22c55e;"></span>
+        CLEARANCE LEVEL: S-RANK
+      </div>
+      
+      <h1>ยินดีต้อนรับ AGENT ใบหม่อน</h1>
+      <p class="desc" style="margin-bottom: 14px;">ตัวตนได้รับการอนุมัติอย่างสมบูรณ์ บัตรประจำตัวสายลับของคุณ:</p>
+
+      <!-- รูปบัตร MIB แสดงผลตรงนี้ -->
+      <img id="agent-mib-card" src="https://i.ibb.co/QFqwG0gH/Untitled-design.jpg" alt="MIB Girl in Black Agent Card" class="card-mib-display">
+
+      <button class="btn-cyber" style="background: linear-gradient(135deg, #ec4899, #db2777); border-color: #f472b6;" onclick="goToPinkTheme()">
+        เข้าสู่พื้นที่ที่ AGENT เจม เตรียมไว้ 💌
+      </button>
+    </div>
+
+    <!-- หน้า 5: ซองจดหมายดอกไม้สีชมพู (The Grand Finale) -->
+    <div id="step-5" class="step-page">
+      <div class="flower-decor">🌸 🌷 💐 🌺 🌸</div>
+      <h1 class="pink-title">Happy Birthday ใบหม่อน 🎂</h1>
+      <p class="desc pink-desc" id="tap-instruction">มีจดหมายพิเศษจากเจมส่งถึงเธอ แตะที่ซองเพื่อเปิดอ่านนะ</p>
+
+      <!-- ซองจดหมาย -->
+      <div class="envelope-container" id="envelope" onclick="openLetter()">
+        <div class="envelope-flap" id="envelope-flap"></div>
+        <div class="envelope-heart">💌</div>
+      </div>
+
+      <!-- แผ่นกระดาษจดหมาย -->
+      <div class="letter-paper" id="letter-content">
+        <p style="font-weight: 600; color: #db2777; margin-bottom: 12px; font-size: 16px;">ถึง ใบหม่อนคนเก่งของเจม 💕</p>
+        
+        <!-- ข้อความในจดหมายรอแก้ไข -->
+        <div id="custom-letter-text">
+          <p>สุขสันต์วันเกิดนะใบหม่อน... ขอบคุณที่อยู่ข้างๆ เจมเสมอนะ ขอให้ปีนี้เป็นปีที่มีแต่รอยยิ้ม ความสุข และสดใสเหมือนดอกไม้พวกนี้เลยนะ รักใบหม่อนที่สุดเลย ❤️</p>
+        </div>
+
+        <p style="text-align: right; margin-top: 18px; font-weight: 600; color: #db2777;">
+          — จาก เจม —
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const CORRECT_ID = "1300201783061";
+    const CORRECT_BIRD_NAME = "เต้าหู้";
+
+    function goToStep(stepNum) {
+      document.querySelectorAll('.step-page').forEach(page => page.classList.remove('active'));
+      const targetPage = document.getElementById(`step-${stepNum}`);
+      if (targetPage) targetPage.classList.add('active');
+    }
+
+    function verifyStep1() {
+      const inputVal = document.getElementById('id-card-input').value.trim();
+      const errorEl = document.getElementById('error-step1');
+
+      if (inputVal === CORRECT_ID) {
+        errorEl.innerText = "";
+        goToStep(3);
+      } else {
+        errorEl.innerText = "[ACCESS DENIED] รหัสบัตรไม่ถูกต้อง กลไกยังคงถูกล็อก";
+      }
+    }
+
+    function verifyStep2() {
+      const inputVal = document.getElementById('bird-input').value.trim();
+      const errorEl = document.getElementById('error-step2');
+
+      if (inputVal === CORRECT_BIRD_NAME) {
+        errorEl.innerText = "";
+        goToStep(4);
+      } else {
+        errorEl.innerText = "[VERIFICATION FAILED] รหัสนามไม่ถูกต้อง โปรดระบุชื่อที่แท้จริง";
+      }
+    }
+
+    function goToPinkTheme() {
+      document.body.classList.add('romantic-mode');
+      document.getElementById('main-card').classList.add('pink-card');
+      goToStep(5);
+    }
+
+    function openLetter() {
+      document.getElementById('envelope').style.display = 'none';
+      document.getElementById('tap-instruction').style.display = 'none';
+      document.getElementById('letter-content').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
